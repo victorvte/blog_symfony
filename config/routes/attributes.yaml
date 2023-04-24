@@ -1,0 +1,16 @@
+# config/routes/attributes.yaml
+controllers:
+  resource:
+    path: ../../src/Controller/
+    namespace: App\Controller
+  type: attribute
+
+api_controllers:
+  resource:
+    path: ../../src/Controller/API
+    namespace: App\Controller\API
+  type: attribute
+
+kernel:
+  resource: App\Kernel
+  type: attribute

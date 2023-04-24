@@ -1,0 +1,9 @@
+includes:
+    - vendor/phpstan/phpstan/extension.neon
+
+parameters:
+    bootstrapFiles:
+        - vendor/autoload.php
+
+    ignoreErrors:
+        - '#Property Blog\\Entity\\Post::\$slug has invalid typehint type Symfony\\Component\\Routing\\Annotation\\Route#'
