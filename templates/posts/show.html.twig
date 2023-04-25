@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ post.user.name }}</h6>
+                <p class="card-text">{{ post.body }}</p>
+                <a href="{{ path('blog_list') }}" class="card-link">go back</a>
+                <a href="https://www.{{ post.user.website }}" target="_blank" class="card-link">{{ post.user.website }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

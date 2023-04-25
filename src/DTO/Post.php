@@ -4,11 +4,21 @@ declare(strict_types=1);
 
 namespace App\DTO;
 
+use JMS\Serializer\Annotation as Serializer;
+
 class Post implements PostInterface
 {
+    private ?User $user = null;
+
+    /**
+     * @Serializer\Type("int")
+     * @Serializer\SerializedName("userId")
+     */
+    private int $userId;
+
     public function __construct(
+        int $userId,
         private int $id,
-        private int $userId,
         private string $title,
         private string $body
     ) {}
@@ -75,5 +85,21 @@ class Post implements PostInterface
     public function setBody(string $body): void
     {
         $this->body = $body;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     */
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
     }
 }

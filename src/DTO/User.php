@@ -10,7 +10,8 @@ class User implements UserInterface
         private int $id,
         private string $name,
         private string $username,
-        private string $email
+        private string $email,
+        private string $website
     ) {}
 
     /**
@@ -75,5 +76,21 @@ class User implements UserInterface
     public function setEmail(string $email): void
     {
         $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebsite(): string
+    {
+        return $this->website;
+    }
+
+    /**
+     * @param string $website
+     */
+    public function setWebsite(string $website): void
+    {
+        $this->website = $website;
     }
 }
