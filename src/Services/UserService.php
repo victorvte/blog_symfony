@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\DTO\Post;
 use App\DTO\User;
 use App\Util\DTOSerializer;
 
@@ -20,19 +19,22 @@ class UserService
         $this->serializer = new DTOSerializer();
     }
 
-    public function getAll(): string
+    /**
+     * @return array<User>
+     */
+    public function getAll(): array
     {
         try {
-            return $this->client->execute(ClientService::GET, self::ENDPOINT)->getContent();
+            return $this->serializer->deserialize($this->client->execute(ClientService::GET, self::ENDPOINT)->getContent(), 'array<'.User::class.'>', DTOSerializer::FORMAT_JSON);
         } catch (\Throwable $throwable) {
-            return $throwable->getMessage();
+            return [];
         }
     }
 
-    public function getOne(int $postId): ?User
+    public function getOne(int $id): ?User
     {
         try {
-            return $this->serializer->deserialize($this->client->execute(ClientService::GET, self::ENDPOINT.\DIRECTORY_SEPARATOR.$postId)->getContent(), User::class, DTOSerializer::FORMAT_JSON);
+            return $this->serializer->deserialize($this->client->execute(ClientService::GET, self::ENDPOINT.\DIRECTORY_SEPARATOR.$id)->getContent(), User::class, DTOSerializer::FORMAT_JSON);
         } catch (\Throwable $throwable) {
             return null;
         }

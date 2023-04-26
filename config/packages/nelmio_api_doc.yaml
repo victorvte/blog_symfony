@@ -1,0 +1,11 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Symfony Blog
+            version: 1.0.0
+        tags:
+            - name: Health Check
+            - name: Posts
+    areas:
+        path_patterns:
+            - ^/api(?!/doc$)

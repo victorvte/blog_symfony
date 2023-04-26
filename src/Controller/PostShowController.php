@@ -29,7 +29,6 @@ class PostShowController extends AbstractController
         try {
             /** @var Post $post */
             $post = $postService->getOne($id);
-
             if (!$post){
                 $this->redirectToRoute('blog_list');
             }
