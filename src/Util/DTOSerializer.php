@@ -32,15 +32,4 @@ class DTOSerializer implements SerializerInterface
     {
         return $this->serializer->deserialize($data, $type, $format);
     }
-
-
-
-
-
-
-
-
-
-
-
 }

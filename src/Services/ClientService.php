@@ -16,13 +16,12 @@ class ClientService
     public function __construct(
         private readonly string $apiUrl,
         private readonly HttpClientInterface $client
-    ) {}
+    ) {
+    }
 
     /**
-     * @param string $method
-     * @param string $endpoint
-     * @param array $options
-     * @return ResponseInterface
+     * @param array<mixed> $options
+     *
      * @throws TransportExceptionInterface
      */
     public function execute(string $method, string $endpoint, array $options = []): ResponseInterface

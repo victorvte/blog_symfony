@@ -25,7 +25,12 @@ class UserService
     public function getAll(): array
     {
         try {
-            return $this->serializer->deserialize($this->client->execute(ClientService::GET, self::ENDPOINT)->getContent(), 'array<'.User::class.'>', DTOSerializer::FORMAT_JSON);
+            $rawUsers = $this->client->execute(ClientService::GET, self::ENDPOINT)->getContent();
+
+            /** @var array<User> $users */
+            $users = $this->serializer->deserialize($rawUsers, 'array<'.User::class.'>', DTOSerializer::FORMAT_JSON);
+
+            return $users;
         } catch (\Throwable $throwable) {
             return [];
         }

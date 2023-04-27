@@ -10,6 +10,7 @@ use App\Services\PostService;
 use App\Services\UserService;
 use App\Util\DTOSerializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,12 +26,12 @@ class PostShowController extends AbstractController
         DTOSerializer $serializer,
         PostService $postService,
         UserService $userService,
-    ): Response {
+    ): Response|RedirectResponse {
         try {
-            /** @var Post $post */
+            /** @var Post|null $post */
             $post = $postService->getOne($id);
-            if (!$post){
-                $this->redirectToRoute('blog_list');
+            if (null === $post) {
+                return $this->redirectToRoute('blog_list');
             }
 
             /** @var User $user */
@@ -38,10 +39,9 @@ class PostShowController extends AbstractController
 
             $post->setUser($user);
 
+            return $this->render('posts/show.html.twig', ['post' => $post]);
         } catch (\Throwable $throwable) {
-            $this->redirectToRoute('blog_list');
+            return $this->redirectToRoute('blog_list');
         }
-
-        return $this->render('posts/show.html.twig', ['post' => $post]);
     }
 }

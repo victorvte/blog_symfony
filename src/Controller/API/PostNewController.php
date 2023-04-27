@@ -12,7 +12,9 @@ use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route(
     'api/post/new',
@@ -48,11 +50,21 @@ class PostNewController extends AbstractController
         Request $request,
         DTOSerializer $serializer,
         PostService $postService,
+        ValidatorInterface $validator
     ): JsonResponse {
         try {
             $post = $serializer->deserialize($request->getContent(), Post::class, DTOSerializer::FORMAT_JSON);
 
-            //TODO: validate
+            $errors = $validator->validate($post);
+
+            if (\count($errors) > 0) {
+                $errorsString = [];
+                foreach ($errors as $error) {
+                    $errorsString[] = $error->getMessage();
+                }
+
+                return new JsonResponse(\json_encode($errorsString, JSON_THROW_ON_ERROR), Response::HTTP_BAD_REQUEST);
+            }
 
             $response = $postService->create($post);
         } catch (\Throwable $throwable) {

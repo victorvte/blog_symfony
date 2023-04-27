@@ -24,11 +24,16 @@ class PostService
     public function getAll(): array
     {
         try {
-            return $this->serializer->deserialize(
-                $this->client->execute(ClientService::GET, self::ENDPOINT)->getContent(),
+            $rawPosts = $this->client->execute(ClientService::GET, self::ENDPOINT)->getContent();
+
+            /** @var array<Post> $posts */
+            $posts = $this->serializer->deserialize(
+                $rawPosts,
                 'array<'.Post::class.'>',
                 DTOSerializer::FORMAT_JSON
             );
+
+            return $posts;
         } catch (\Throwable $throwable) {
             return [];
         }

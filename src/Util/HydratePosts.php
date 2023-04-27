@@ -12,9 +12,10 @@ class HydratePosts
     /**
      * @param array<Post> $posts
      * @param array<User> $users
+     *
      * @return array<Post>
      */
-    public function hydrate(array $posts, array $users): array
+    public static function hydrate(array $posts, array $users): array
     {
         $usersIndexedById = [];
         foreach ($users as $user) {
