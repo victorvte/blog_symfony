@@ -4,14 +4,73 @@ declare(strict_types=1);
 
 namespace App\DTO;
 
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+
 class User implements UserInterface
 {
+    #[Assert\Positive]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
+    /**
+     * @Serializer\Type("int")
+     *
+     * @Serializer\SerializedName("id")
+     */
+    private int $id;
+
+    #[Assert\Type(
+        type: 'string',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
+    /**
+     * @Serializer\Type("string")
+     *
+     * @Serializer\SerializedName("title")
+     */
+    private string $name;
+
+    #[Assert\Type(
+        type: 'string',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
+    /**
+     * @Serializer\Type("string")
+     *
+     * @Serializer\SerializedName("username")
+     */
+    private string $username;
+
+    #[Assert\Type(
+        type: 'string',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
+    /**
+     * @Serializer\Type("string")
+     *
+     * @Serializer\SerializedName("email")
+     */
+    private string $email;
+
+    #[Assert\Type(
+        type: 'string',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
+    /**
+     * @Serializer\Type("string")
+     *
+     * @Serializer\SerializedName("website")
+     */
+    private string $website;
+
     public function __construct(
-        private int $id,
-        private string $name,
-        private string $username,
-        private string $email,
-        private string $website
+        int $id,
+        string $name,
+        string $username,
+        string $email,
+        string $website
     ) {
     }
 

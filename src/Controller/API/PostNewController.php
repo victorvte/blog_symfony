@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\API;
 
 use App\DTO\Post;
+use App\Services\DTOValidatorService;
 use App\Services\PostService;
 use App\Util\DTOSerializer;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -14,7 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route(
     'api/post/new',
@@ -50,20 +50,14 @@ class PostNewController extends AbstractController
         Request $request,
         DTOSerializer $serializer,
         PostService $postService,
-        ValidatorInterface $validator
+        DTOValidatorService $validator
     ): JsonResponse {
         try {
             $post = $serializer->deserialize($request->getContent(), Post::class, DTOSerializer::FORMAT_JSON);
 
-            $errors = $validator->validate($post);
-
+            $errors = $validator->validatePost($post);
             if (\count($errors) > 0) {
-                $errorsString = [];
-                foreach ($errors as $error) {
-                    $errorsString[] = $error->getMessage();
-                }
-
-                return new JsonResponse(\json_encode($errorsString, JSON_THROW_ON_ERROR), Response::HTTP_BAD_REQUEST);
+                return new JsonResponse(\json_encode($errors, JSON_THROW_ON_ERROR), Response::HTTP_BAD_REQUEST);
             }
 
             $response = $postService->create($post);

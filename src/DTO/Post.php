@@ -5,11 +5,17 @@ declare(strict_types=1);
 namespace App\DTO;
 
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Post implements PostInterface
 {
     private ?User $user = null;
 
+    #[Assert\Positive]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     /**
      * @Serializer\Type("int")
      *
@@ -17,13 +23,50 @@ class Post implements PostInterface
      */
     private int $userId;
 
+    #[Assert\Positive]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
+    /**
+     * @Serializer\Type("int")
+     *
+     * @Serializer\SerializedName("id")
+     */
+    private int $id;
+
+    #[Assert\Type(
+        type: 'string',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
+    /**
+     * @Serializer\Type("string")
+     *
+     * @Serializer\SerializedName("title")
+     */
+    private string $title;
+
+    #[Assert\Type(
+        type: 'string',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
+    /**
+     * @Serializer\Type("string")
+     *
+     * @Serializer\SerializedName("body")
+     */
+    private string $body;
+
     public function __construct(
         int $userId,
-        private int $id,
-        private string $title,
-        private string $body
+        int $id,
+        string $title,
+        string $body
     ) {
         $this->userId = $userId;
+        $this->id = $id;
+        $this->title = $title;
+        $this->body = $body;
     }
 
     public function getId(): int
