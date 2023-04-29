@@ -25,3 +25,5 @@ vendor/bin/phpstan analyse -c phpstan.neon -l 9 src
 vendor/bin/php-cs-fixer fix
 vendor/bin/phpunit tests
 ```
+
+Look at '/api/doc' route to see available endpoints
