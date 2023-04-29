@@ -41,8 +41,8 @@ class PostListController extends AbstractController
             $posts = $hydratePostsService->hydrate($postService->getAll(), $userService->getAll());
 
             $response = $serializer->serialize($posts, DTOSerializer::FORMAT_JSON);
-        } catch (\Throwable $e) {
-            $response = 'Data not found';
+        } catch (\Throwable $throwable) {
+            $response = 'Data not found, ERROR:'.$throwable->getMessage();
         }
 
         return new JsonResponse($response);

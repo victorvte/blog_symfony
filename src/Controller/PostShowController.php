@@ -41,7 +41,7 @@ class PostShowController extends AbstractController
 
             return $this->render('posts/show.html.twig', ['post' => $post]);
         } catch (\Throwable $throwable) {
-            return $this->redirectToRoute('blog_list');
+            return $this->redirectToRoute('blog_list', ['error' => $throwable->getMessage()]);
         }
     }
 }

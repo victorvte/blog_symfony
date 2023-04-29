@@ -28,7 +28,7 @@ class User implements UserInterface
     /**
      * @Serializer\Type("string")
      *
-     * @Serializer\SerializedName("title")
+     * @Serializer\SerializedName("name")
      */
     private string $name;
 
@@ -72,6 +72,11 @@ class User implements UserInterface
         string $email,
         string $website
     ) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->username = $username;
+        $this->email = $email;
+        $this->website = $website;
     }
 
     public function getId(): int

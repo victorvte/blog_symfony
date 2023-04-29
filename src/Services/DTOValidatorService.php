@@ -17,20 +17,23 @@ class DTOValidatorService
     }
 
     /**
-     * @param Post $post
      * @return array<string>
      */
     public function validatePost(Post $post): array
     {
         $errors = $this->validator->validate($post);
 
-        if (\count($errors) === 0) {
+        if (0 === \count($errors)) {
             return [];
         }
 
         $errorsString = [];
-        foreach ($errors as $error) {
-            $errorsString[] = $error->getMessage();
+        try {
+            foreach ($errors as $error) {
+                $errorsString[] = (string) $error->getMessage();
+            }
+        } catch (\Throwable $throwable) {
+            return [$throwable->getMessage()];
         }
 
         return $errorsString;

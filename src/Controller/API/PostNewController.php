@@ -62,7 +62,7 @@ class PostNewController extends AbstractController
 
             $response = $postService->create($post);
         } catch (\Throwable $throwable) {
-            $response = $throwable->getMessage();
+            $response = 'ERROR:'.$throwable->getMessage();
         }
 
         return new JsonResponse($response);

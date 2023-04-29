@@ -17,7 +17,7 @@ yarn-error.log
 
 ###> phpstorm ###
 /.idea
-/.idea/
+/.idea/*
 ###< phpstorm ###
 
 ###> friendsofphp/php-cs-fixer ###
